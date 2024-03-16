@@ -1,7 +1,7 @@
-import { Button } from "@chakra-ui/react";
+import Characters from "./components/Characters";
 
 function App() {
-  return <Button colorScheme="blue">Button</Button>;
+  return <Characters />;
 }
 
 export default App;
