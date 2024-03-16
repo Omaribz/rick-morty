@@ -1,16 +1,17 @@
-import { Text } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import useCharacters from "../hooks/useCharacters";
+import CharacterCard from "./CharacterCard";
 
 const Characters = () => {
   const { characters, error } = useCharacters();
   return (
     <>
       {error && <Text>{error}</Text>}
-      <ul>
+      <SimpleGrid columns={4} spacing={5} paddingX="250px" paddingY="80px">
         {characters.map((character) => (
-          <li key={character.id}>{character.name}</li>
+          <CharacterCard key={character.id} character={character} />
         ))}
-      </ul>
+      </SimpleGrid>
     </>
   );
 };
