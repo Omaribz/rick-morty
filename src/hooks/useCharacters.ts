@@ -1,5 +1,5 @@
 import apiClient from '../services/api-client';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export interface Character {
     id: number;
@@ -13,6 +13,8 @@ export interface Character {
   interface Info {
     count: number;
     pages: number;
+    next: string | null;
+    previous: string | null;
   }
   
   export interface CharacterResponse {
@@ -28,7 +30,6 @@ const useCharacters = (page: number) => useQuery({
       .then((res) => res.data)  
   },
   staleTime: 24 * 60 * 60 * 1000, //24h
-  placeholderData: keepPreviousData
 })
 
 export default useCharacters;

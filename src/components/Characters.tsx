@@ -4,12 +4,14 @@ import { GrFormPrevious } from "react-icons/gr";
 import useCharacters, { Character } from "../hooks/useCharacters";
 import CharacterCard from "./CharacterCard";
 import { useState } from "react";
+import SkeletonCard from "./SkeletonCard";
 
 const Characters = () => {
   const [page, setPage] = useState(1);
-  const { data, isError, error } = useCharacters(page);
-
-  const characters = data?.results.slice(0, 20);
+  const { data, isError, error, isPending } = useCharacters(page);
+  const skeletons = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+  ];
 
   if (isError) return <Text>{error.message}</Text>;
 
@@ -20,18 +22,21 @@ const Characters = () => {
         marginY="80px"
         fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
         color="#1A365D"
+        fontWeight={1000}
       >
         Rick and Morty
       </Heading>
       <Box backgroundColor="black">
         <SimpleGrid
-          columns={{ sm: 1, md: 2, lg: 4 }}
+          columns={{ base: 1, md: 3, lg: 4, xl: 4 }}
           spacing={5}
-          paddingX={{ base: "50px", md: "100px", lg: "150px", xl: "250px" }}
-          paddingTop="20px"
+          paddingX={{ base: "85px", md: "80px", lg: "80px", xl: "285px" }}
+          paddingTop="50px"
           paddingBottom="30px"
         >
-          {characters?.map((character: Character) => (
+          {isPending &&
+            skeletons.map((skeleton) => <SkeletonCard key={skeleton} />)}
+          {data?.results.map((character: Character) => (
             <CharacterCard key={character.id} character={character} />
           ))}
         </SimpleGrid>
@@ -44,8 +49,10 @@ const Characters = () => {
             aria-label="Done"
             fontSize="20px"
             icon={<GrFormPrevious color="black" />}
-            onClick={() => setPage(page - 1)}
-            marginRight="2px"
+            onClick={() => {
+              if (data?.info.previous) setPage(page - 1);
+            }}
+            marginRight="10px"
           />
           <IconButton
             isRound={true}
@@ -55,8 +62,10 @@ const Characters = () => {
             aria-label="Done"
             fontSize="20px"
             icon={<MdNavigateNext color="black" />}
-            onClick={() => setPage(page + 1)}
-            marginRight="2px"
+            onClick={() => {
+              if (data?.info.next) setPage(page + 1);
+            }}
+            marginRight="10px"
           />
         </Box>
       </Box>

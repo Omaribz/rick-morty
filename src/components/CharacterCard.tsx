@@ -1,5 +1,5 @@
 import { Character } from "../hooks/useCharacters";
-import { Card, CardBody, Heading, Image, Text } from "@chakra-ui/react";
+import { Card, CardBody, Image, Text } from "@chakra-ui/react";
 
 interface CharacterProps {
   character: Character;
@@ -7,11 +7,33 @@ interface CharacterProps {
 
 const CharacterCard = ({ character }: CharacterProps) => {
   return (
-    <Card overflow="hidden">
-      <Image src={character.image}></Image>
+    <Card
+      maxW="200px"
+      width="200px"
+      height="330px"
+      marginBottom="20px"
+      borderRadius="3px"
+      overflow="hidden"
+    >
+      <Image
+        objectFit="cover"
+        height="80%"
+        src={character.image}
+        alt="character"
+        borderTopRadius="3px"
+      />
       <CardBody>
-        <Heading fontSize="2xl">{character.name}</Heading>
-        <Text>{character.location.name}</Text>
+        <Text fontWeight={600} marginLeft="25px" color="#555555">
+          {character.name}
+        </Text>
+        <Text
+          fontWeight={300}
+          fontSize="13px"
+          marginLeft="25px"
+          color="#555555"
+        >
+          {character.location.name}
+        </Text>
       </CardBody>
     </Card>
   );
